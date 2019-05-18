@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  date_time: 2019-05-18 23:36:34
+  ticket_type: MyString
+
+two:
+  name: MyString
+  date_time: 2019-05-18 23:36:34
+  ticket_type: MyString

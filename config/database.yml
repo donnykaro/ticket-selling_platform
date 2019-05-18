@@ -17,8 +17,8 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: proggy
-  password:
+  username: dbuser
+  password: 123456
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
@@ -26,8 +26,9 @@ default: &default
 development:
   <<: *default
   database: ticket_selling_platform_development
-  username: proggy #ticket-selling_platform
-  password: 
+  host: localhost
+  username: dbuser #ticket-selling_platform
+  password: 123456
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -62,8 +63,8 @@ development:
 test:
   <<: *default
   database: ticket_selling_platform_test
-  username: proggy #ticket-selling_platform
-  password: 
+  username: dbuser #ticket-selling_platform
+  password: 123456
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -87,5 +88,5 @@ test:
 production:
   <<: *default
   database: ticket_selling_platform_production
-  username: proggy #ticket-selling_platform
-  password: 
+  username: dbuser #ticket-selling_platform
+  password: 123456
