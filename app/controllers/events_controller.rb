@@ -6,11 +6,15 @@ class EventsController < ApplicationController
 		@events = Event.all
 	end
 
+	def show
+	end
+
 	private
 
 	def get_event
-		#@event = Event.all
 		@event = Event.find(params[:id])
+		@event_tickets = @event.tickets#.where(ticket_type: 'normal').select(:amount)
+		#@concession_tickets = @event.tickets.where(ticket_type: 'concession').select(:amount)
 	end
 
 end

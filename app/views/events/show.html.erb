@@ -1,0 +1,26 @@
+<section class="section">
+	<div class="container">
+		<nav class="level">
+		  <!-- Left side -->
+		  <div class="level-left">
+		    <p class="level-item">
+		        <strong><%= @event.name %></strong>
+		    </p>
+		  </div>
+		</nav>
+		<hr/>
+
+		<div class="content">
+			<h3>Event description:</h3>
+			<%= @event.description %>
+		</div>
+	</div>
+</section>
+
+<section class="section comments">
+	<div class="container">
+		<% @event.tickets.each do |ticket| %>
+			<h2 class="subtitle is-5"><strong>Ticket type: <%= ticket.ticket_type %>, amount: <%= ticket.amount %></strong> tickets</h2>
+		<% end %>
+	</div>
+</section>

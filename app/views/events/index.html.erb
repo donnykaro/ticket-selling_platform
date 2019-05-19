@@ -1,1 +1,15 @@
-test
+<div class="section">
+	<div class="container">
+		<% @events.each do |event| %>
+			<div class="card">
+		  <div class="card-content">
+		    <div class="media">
+		      <div class="media-content">
+		        <p class="title is-4"><%= link_to event.name, event  %></p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<% end %>
+	</div>
+</div>
