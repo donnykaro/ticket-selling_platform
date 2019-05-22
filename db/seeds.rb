@@ -18,16 +18,34 @@ event_list.each do |name, date_time, description|
 end
 
 ticket_list = [
-  [ 1, "normal", 123 ],
-  [ 1, "concession", 50 ],
-  [ 2, "normal", 300 ],
-  [ 2, "concession", 200 ],
-  [ 3, "normal", 100 ],
-  [ 3, "concession", 120 ],
-  [ 4, "normal", 120 ],
-  [ 4, "concession", 100 ]
+  [ 1, "normal", 123, 110, "multiple" ],
+  [ 1, "concession", 50, 70, "multiple" ],
+  [ 2, "normal", 300, 120, "multiple" ],
+  [ 2, "concession", 200, 80, "multiple" ],
+  [ 3, "normal", 100, 300, "multiple" ],
+  [ 3, "concession", 120, 200, "multiple" ],
+  [ 4, "normal", 120, 180, "multiple" ],
+  [ 4, "concession", 100, 100, "multiple" ],
+
+  [ 1, "normal", 123, 100, "altogether" ],
+  [ 1, "concession", 50, 60, "altogether" ],
+  [ 2, "normal", 300, 120, "altogether" ],
+  [ 2, "concession", 200, 80, "altogether" ],
+  [ 3, "normal", 100, 300, "altogether" ],
+  [ 3, "concession", 120, 200, "altogether" ],
+  [ 4, "normal", 120, 180, "altogether" ],
+  [ 4, "concession", 100, 100, "altogether" ],
+
+  [ 1, "normal", 123, 100, "avoid one" ],
+  [ 1, "concession", 50, 60, "avoid one" ],
+  [ 2, "normal", 300, 120, "avoid one" ],
+  [ 2, "concession", 200, 80, "avoid one" ],
+  [ 3, "normal", 100, 300, "avoid one" ],
+  [ 3, "concession", 120, 200, "avoid one" ],
+  [ 4, "normal", 120, 180, "avoid one" ],
+  [ 4, "concession", 100, 100, "avoid one" ]
 ]
 
-ticket_list.each do |event_id, ticket_type, amount|
-  Ticket.create( event_id: event_id, ticket_type: ticket_type, amount: amount )
+ticket_list.each do |event_id, ticket_type, amount, price, selling_option|
+  Ticket.create( event_id: event_id, ticket_type: ticket_type, amount: amount, price: price, selling_option: selling_option )
 end

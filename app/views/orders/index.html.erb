@@ -1,0 +1,24 @@
+<div class="section">
+	<div class="container">
+		<% current_user.orders.each do |order| %>
+			<div class="card">
+		  <div class="card-content">
+		    <div class="media">
+		      <div class="media-content">
+		        <p class="title is-4">Order for event: <%= order.ticket.event.name %>, bill: <%= order.bill %></p>
+		        <% unless order.multiple_tickets_amount == ""%>
+		        	<p>Multiple tickets: <%= order.multiple_tickets_amount %></p>
+		        <% end %>
+		        <% unless order.altogether_tickets_amount == ""%>
+		        	<p>Altogether tickets: <%= order.altogether_tickets_amount %></p>
+		        <% end %>
+		        <% unless order.avoid_one_tickets_amount == ""%>
+		        	<p>Avoid one tickets: <%= order.avoid_one_tickets_amount %></p>
+		        <% end %>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<% end %>
+	</div>
+</div>

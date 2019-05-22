@@ -18,6 +18,9 @@
                   <!-- TODO - change to statemachine -->
                   <% if user_signed_in? %>
                     <p class="control">
+                      <%= link_to "Reservations", user_orders_path(current_user.id) %>
+                    </p>
+                    <p class="control">
                       <%= link_to current_user.email, edit_user_registration_path %>
                     </p>
                     <p class="control">

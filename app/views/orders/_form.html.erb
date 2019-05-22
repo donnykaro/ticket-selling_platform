@@ -1,0 +1,111 @@
+<div class="section">
+<%= simple_form_for ([@event, @order]) do |f| %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.hidden_field :timestamp, :value => Time.now %>
+  <h2><strong>Order ticket/s for event <%= @event.name %></strong></h2>
+  
+  <div>
+    <div class="field">
+      <h2><strong>Tickets prices</strong></h2>
+      <% @tickets_type_and_price.each do |ticket| %>
+        <p class="subtitle is-6">Ticket type: <%= ticket[0] %>, price: <%= ticket[1] %></p>
+      <% end %>
+    </div>
+  </div>
+  </br>
+  <div class="field">
+    <div class="select">
+      <p><strong>Ticket type</strong></p>
+      <%= f.select :ticket_type, @tickets_type_and_price.map { |ticket| [ticket[0]] } %>
+    </div>
+  </div>
+  </br>
+
+  <h2><strong>Selling type, and amount left</strong></h2>
+  <% @multiple_tickets.each do |ticket| %>
+    <h2>Selling option: <%= ticket.selling_option%>, ticket type: <%= ticket.ticket_type %>, amount left: <%= ticket.amount%></h2>
+  <% end %>
+  <div class="field">
+    <div class="control">
+      <%= f.input :multiple_tickets_amount,  wrapper: false, label_html: { class: 'label' } %>
+    </div>
+  </div>
+  </br>
+  <% @altogether_tickets.each do |ticket| %>
+    <h2>Selling option: <%= ticket.selling_option%>, ticket type: <%= ticket.ticket_type %>, amount left: <%= ticket.amount%></h2>
+  <% end %>
+  <div class="field">
+    <div class="control">
+      <%= f.input :altogether_tickets_amount,  wrapper: false, label_html: { class: 'label' } %>
+    </div>
+  </div>
+  </br>
+  <% @avoid_one_tickets.each do |ticket| %>
+    <h2>Selling option: <%= ticket.selling_option%>, ticket type: <%= ticket.ticket_type %>, amount left: <%= ticket.amount%></h2>
+  <% end %>
+  <div class="field">
+    <div class="control">
+      <%= f.input :avoid_one_tickets_amount,  wrapper: false, label_html: { class: 'label' } %>
+    </div>
+  </div>
+  </br>
+
+  <!-- i know this is not the right way, but i couldn't get the js to work through app/assets/js/application.js -->
+  <script type="text/javascript">
+    var elems = [ "#order_multiple_tickets_amount", "#order_altogether_tickets_amount", "#order_avoid_one_tickets_amount" ];
+    $.each( elems, function( i, elem ) {
+      $(elem).on("keypress keyup blur",function (event) {    
+         $(this).val($(this).val().replace(/[^\d].+/, ""));
+          if ((event.which < 48 || event.which > 57)) {
+              event.preventDefault();
+          }
+      });
+    });
+    
+
+    var amount = parseInt(0);
+    jQuery('#order_multiple_tickets_amount').on('input', function() {
+      amount = parseInt(0)
+      if(!isNaN(parseInt($("#order_multiple_tickets_amount").val()))){
+        amount += parseInt($("#order_multiple_tickets_amount").val());
+      }
+      if(!isNaN(parseInt($("#order_altogether_tickets_amount").val()))){
+        amount += parseInt($("#order_altogether_tickets_amount").val());
+      }
+      if(!isNaN(parseInt($("#order_avoid_one_tickets_amount").val()))){
+        amount += parseInt($("#order_avoid_one_tickets_amount").val());
+      }
+      $('#order_amount').val(amount)
+    });
+    jQuery('#order_altogether_tickets_amount').on('input', function() {
+      amount = parseInt(0)
+      if(!isNaN(parseInt($("#order_multiple_tickets_amount").val()))){
+        amount += parseInt($("#order_multiple_tickets_amount").val());
+      }
+      if(!isNaN(parseInt($("#order_altogether_tickets_amount").val()))){
+        amount += parseInt($("#order_altogether_tickets_amount").val());
+      }
+      if(!isNaN(parseInt($("#order_avoid_one_tickets_amount").val()))){
+        amount += parseInt($("#order_avoid_one_tickets_amount").val());
+      }
+      $("#order_amount").val(amount)
+    });
+    jQuery('#order_avoid_one_tickets_amount').on('input', function() {
+      amount = parseInt(0)
+      if(!isNaN(parseInt($("#order_multiple_tickets_amount").val()))){
+        amount += parseInt($("#order_multiple_tickets_amount").val());
+      }
+      if(!isNaN(parseInt($("#order_altogether_tickets_amount").val()))){
+        amount += parseInt($("#order_altogether_tickets_amount").val());
+      }
+      if(!isNaN(parseInt($("#order_avoid_one_tickets_amount").val()))){
+        amount += parseInt($("#order_avoid_one_tickets_amount").val());
+      }
+      $("#order_amount").val(amount)
+    });
+  </script>
+
+  </br>
+  <%= f.button :submit, 'Make reservation', class: "button is-primary"  %>
+<% end %>
+</div>

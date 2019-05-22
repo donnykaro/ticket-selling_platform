@@ -4,7 +4,7 @@
 		  <!-- Left side -->
 		  <div class="level-left">
 		    <p class="level-item">
-		        <strong><%= @event.name %></strong>
+		        <strong><%= @event.name %>, Date: <%= @event.date_time%></strong>
 		    </p>
 		  </div>
 		</nav>
@@ -19,8 +19,9 @@
 
 <section class="section comments">
 	<div class="container">
-		<% @event.tickets.each do |ticket| %>
-			<h2 class="subtitle is-5"><strong>Ticket type: <%= ticket.ticket_type %>, amount: <%= ticket.amount %></strong> tickets</h2>
+		<% @arr.each do |ticket| %>
+			<h2 class="subtitle is-5"><strong>Ticket type: <%= ticket[0].ticket_type %>, amount: <%= ticket[1] %></strong> tickets left </h2>
 		<% end %>
+		<%= link_to "Order ticket", new_event_order_path(params[:id]), class: "button is-primary" %>
 	</div>
 </section>

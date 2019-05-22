@@ -7,6 +7,14 @@ class EventsController < ApplicationController
 	end
 
 	def show
+		@arr = Array.new
+		@event.tickets.select(:ticket_type).distinct.each do |ticket_type|
+			tickets_count = 0
+			@event.tickets.where(ticket_type: ticket_type.ticket_type).each do |f| 
+				tickets_count += f.amount
+			end
+				@arr.push([ticket_type, tickets_count])
+		end
 	end
 
 	private
@@ -16,5 +24,4 @@ class EventsController < ApplicationController
 		@event_tickets = @event.tickets#.where(ticket_type: 'normal').select(:amount)
 		#@concession_tickets = @event.tickets.where(ticket_type: 'concession').select(:amount)
 	end
-
 end

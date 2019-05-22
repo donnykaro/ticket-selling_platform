@@ -30,7 +30,7 @@ gem "bulma-rails", "~> 0.7.4"
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 gem 'simple_form', '~> 4.1'
-
+gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -50,6 +50,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'better_errors', '~> 2.5', '>= 2.5.1'
+  gem 'pry', '~> 0.12.2'
 end
 
 group :test do

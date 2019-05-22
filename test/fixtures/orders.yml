@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  ticket_id: 
+  amount: 
+  bill: 
+  timestamp: 2019-05-19 18:11:36
+
+two:
+  user_id: 
+  ticket_id: 
+  amount: 
+  bill: 
+  timestamp: 2019-05-19 18:11:36
