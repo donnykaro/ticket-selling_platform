@@ -73,11 +73,11 @@ class OrdersController < ApplicationController
 	end
 
 	def check_altogether_tickets_order
-		if order_params[:altogether_tickets_amount] != "" && @altogether_tickets.where(:ticket_type => order_params[:ticket_type]).first.amount != order_params[:altogether_tickets_amount].to_i
+		altogether_tickets_amount = @altogether_tickets.where(:ticket_type => order_params[:ticket_type]).first.amount
+		if order_params[:altogether_tickets_amount] != "" && altogether_tickets_amount != order_params[:altogether_tickets_amount].to_i
 			flash[:alert].push("You can only buy all at once tickets of type altogether")
 		end
-		altogether_tickets_amount = @altogether_tickets.where(:ticket_type => order_params[:ticket_type]).first.amount
-		if order_params[:altogether_tickets_amount] != "" && @altogether_tickets.where(:ticket_type => order_params[:ticket_type]).first.amount != order_params[:altogether_tickets_amount].to_i && order_params[:altogether_tickets_amount].to_i > altogether_tickets_amount
+		if order_params[:altogether_tickets_amount] != "" && altogether_tickets_amount != order_params[:altogether_tickets_amount].to_i && order_params[:altogether_tickets_amount].to_i > altogether_tickets_amount
 			@order_altogether_hash = nil
 			flash[:alert].push("You can only buy all at once tickets of type altogether, and cant be bigger than: #{altogether_tickets_amount}")
 		end
