@@ -3,7 +3,7 @@
   <%= f.hidden_field :user_id, :value => current_user.id %>
   <%= f.hidden_field :order_id, :value => params[:order_id] %>
   <%= f.hidden_field :bill, :value => @order.bill %>
-  <h2><strong>Pay for tickets for event <%= @event.name %></strong></h2>
+  <h2><strong>Pay for tickets for event <%= @event.name %>, bill: <%= @order.bill %></strong></h2>
 
   <div class="field">
     <div class="control">

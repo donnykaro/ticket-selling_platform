@@ -25,9 +25,7 @@ class OrdersController < ApplicationController
 			# @order_multiple = Order.new(o_params)
 		end
 
-		if order_params[:multiple_tickets_amount] != "" && order_params[:multiple_tickets_amount].to_i % 2 != 0
-			flash[:alert].push("Number of multiple tickets has to be even")
-		end
+		check_multiple_tickets_order
 
 		if order_params[:altogether_tickets_amount] != "" && @altogether_tickets.where(:ticket_type => order_params[:ticket_type]).first.amount == order_params[:altogether_tickets_amount].to_i
 			@order_altogether_hash = order_params
@@ -39,9 +37,7 @@ class OrdersController < ApplicationController
 			# @order_altogether = Order.new(o_params)
 		end
 
-		if order_params[:altogether_tickets_amount] != "" && @altogether_tickets.where(:ticket_type => order_params[:ticket_type]).first.amount != order_params[:altogether_tickets_amount].to_i
-			flash[:alert].push("You can only buy all at once tickets of type altogether")
-		end
+		check_altogether_tickets_order
 
 		avoid_one_tickets_amount = @avoid_one_tickets.where(:ticket_type => order_params[:ticket_type]).first.amount
 		if order_params[:avoid_one_tickets_amount] != "" && (order_params[:avoid_one_tickets_amount].to_i == avoid_one_tickets_amount || (avoid_one_tickets_amount - order_params[:avoid_one_tickets_amount].to_i >= 2))
@@ -54,15 +50,49 @@ class OrdersController < ApplicationController
 			# @order_avoid_one = Order.new(o_params)
 		end
 
-		if order_params[:avoid_one_tickets_amount] != "" && (order_params[:avoid_one_tickets_amount].to_i != avoid_one_tickets_amount || (avoid_one_tickets_amount - order_params[:avoid_one_tickets_amount].to_i <= 2))
-			flash[:alert].push("Avoid one can only be bought so there will be other quantity left than one")
-		end
+		check_avoid_one_tickets_order avoid_one_tickets_amount
 
 		orders = [@order_multiple_hash, @order_altogether_hash, @order_avoid_one_hash]
 		try_to_save = orders.map { |order| Order.new(order).save }
-		render 'orders/index'
-		# pry
+		
+		check_other_stuff try_to_save
 
+		render 'orders/index'
+	end
+
+
+	def check_multiple_tickets_order
+		if order_params[:multiple_tickets_amount] != "" && order_params[:multiple_tickets_amount].to_i % 2 != 0
+			flash[:alert].push("Number of multiple tickets has to be even")
+		end
+		multiple_tickets_amount = @multiple_tickets.where(:ticket_type => order_params[:ticket_type]).first.amount
+		if order_params[:multiple_tickets_amount] != "" && order_params[:multiple_tickets_amount].to_i % 2 != 0 && order_params[:multiple_tickets_amount].to_i > multiple_tickets_amount
+			@order_multiple_hash = nil
+			flash[:alert].push("Number of multiple tickets has to be even, and cant be bigger than: #{multiple_tickets_amount}")
+		end
+	end
+
+	def check_altogether_tickets_order
+		if order_params[:altogether_tickets_amount] != "" && @altogether_tickets.where(:ticket_type => order_params[:ticket_type]).first.amount != order_params[:altogether_tickets_amount].to_i
+			flash[:alert].push("You can only buy all at once tickets of type altogether")
+		end
+		altogether_tickets_amount = @altogether_tickets.where(:ticket_type => order_params[:ticket_type]).first.amount
+		if order_params[:altogether_tickets_amount] != "" && @altogether_tickets.where(:ticket_type => order_params[:ticket_type]).first.amount != order_params[:altogether_tickets_amount].to_i && order_params[:altogether_tickets_amount].to_i > altogether_tickets_amount
+			@order_altogether_hash = nil
+			flash[:alert].push("You can only buy all at once tickets of type altogether, and cant be bigger than: #{altogether_tickets_amount}")
+		end
+	end
+
+	def check_avoid_one_tickets_order avoid_one_tickets_amount
+		if order_params[:avoid_one_tickets_amount] != "" && (order_params[:avoid_one_tickets_amount].to_i != avoid_one_tickets_amount && (avoid_one_tickets_amount - order_params[:avoid_one_tickets_amount].to_i <= 1))
+			flash[:alert].push("Avoid one can only be bought so there will be other quantity left than one")
+		end
+		if order_params[:avoid_one_tickets_amount] != "" && (order_params[:avoid_one_tickets_amount].to_i != avoid_one_tickets_amount && (avoid_one_tickets_amount - order_params[:avoid_one_tickets_amount].to_i <= 1)) && order_params[:avoid_one_tickets_amount].to_i > avoid_one_tickets_amount
+			flash[:alert].push("Avoid one can only be bought so there will be other quantity left than one")
+		end
+	end
+
+	def check_other_stuff try_to_save
 		if @order_multiple_hash != nil && order_params[:multiple_tickets_amount] != "" &&  try_to_save[0] == false
 			pry
 			Order.new(@order_multiple_hash).save.errors.each do |error|
@@ -88,6 +118,10 @@ class OrdersController < ApplicationController
 		end
 		if try_to_save[2]
 			flash[:notice].push("Avoid one tickets order saved")
+		end
+
+		if order_params[:multiple_tickets_amount] == "" && order_params[:altogether_tickets_amount] == "" && order_params[:avoid_one_tickets_amount] == ""
+			flash[:alert].push("Nothing saved, form empty")
 		end
 	end
 

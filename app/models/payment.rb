@@ -1,6 +1,6 @@
 class Payment < ApplicationRecord
 	belongs_to :user
-	has_one :order
+	belongs_to :order
 
-	validates :user_id, :order_id, :hashed_card, presence: true
+	validates :user_id, :order_id, :hashed_card, :bill, presence: true
 end
