@@ -18,8 +18,8 @@ event_list.each do |name, date_time, description|
 end
 
 ticket_list = [
-  [ 1, "normal", 123, 110, "multiple" ],
-  [ 1, "concession", 50, 70, "multiple" ],
+  [ 1, "normal", 123, 100, "multiple" ],
+  [ 1, "concession", 50, 60, "multiple" ],
   [ 2, "normal", 300, 120, "multiple" ],
   [ 2, "concession", 200, 80, "multiple" ],
   [ 3, "normal", 100, 300, "multiple" ],

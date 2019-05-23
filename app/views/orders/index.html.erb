@@ -1,5 +1,16 @@
 <div class="section">
 	<div class="container">
+		<% if flash[:notice].count > 0 %>
+			<% flash[:notice].each do |n| %>
+				<%= flash[:notice] = n %>
+			<% end %>
+		<% end %>
+		<% if flash[:alert].count > 0 %>
+			<% flash[:alert].each do |a| %>
+				<%= flash[:alert] = a %>
+			<% end %>
+		<% end %>
+
 		<% current_user.orders.each do |order| %>
 			<div class="card">
 		  <div class="card-content">
