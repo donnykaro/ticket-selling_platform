@@ -3,9 +3,9 @@ class OrdersController < ApplicationController
 	before_action :get_event, only: [:new, :create]
 	before_action :get_tickets, only: [:new, :create]
 	before_action :get_ticket_selling_options, only: [:new, :create]
+	before_action :check_if_expired
 
 	def index
-		@orders = Order.where(:user_id => current_user.id).order("created_at DESC")
 	end
 
 	def new
@@ -151,6 +151,19 @@ class OrdersController < ApplicationController
 		# @tickets_type_selling_option_and_price = @event.tickets#.select(:ticket_type, :selling_option, :amount)#.each do |tickets|
 		# 	@tickets_type_and_price.push([tickets.ticket_type, tickets.selling_option, tickets.amount])
 		# end
+	end
+
+	def check_if_expired
+		@orders = Order.where(:user_id => current_user.id).order("created_at DESC")
+
+		@orders.each do |order|
+			total_seconds = (Time.now - order.created_at)
+			minutes = (total_seconds / 60).floor
+		
+			if order.state != "paid" && minutes > 15
+				order.update(state: "expired")
+			end
+		end
 	end
 
 	def order_params

@@ -12,6 +12,15 @@ class PaymentsController < ApplicationController
 		local_params[:hashed_card] = @encrypted_card 
 		@payment = Payment.new(local_params)
 		
+		total_seconds = (Time.now - @payment.order.created_at)
+		minutes = (total_seconds / 60).floor
+
+		if minutes > 15
+			@payment.order.update(state: "expired")
+			@payment = nil
+			flash[:alert] = "The order has expired"
+		end
+
 		if @payment.save
 			flash[:notice] = "payment successful"
 			@payment.order.update(state: "paid")

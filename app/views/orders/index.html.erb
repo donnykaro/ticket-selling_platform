@@ -19,19 +19,19 @@
 		        <p class="title is-4">Order for event: <%= order.ticket.event.name %>, bill: <%= order.bill %></p>
 		        <% unless order.multiple_tickets_amount == ""%>
 		        	<p>Multiple tickets: <%= order.multiple_tickets_amount %></br>Status: <%= order.state %></p>
-		        	<% unless order.state == "paid" %>
+		        	<% unless order.state == "paid" || order.state == "expired"%>
 		        		<p>Pay: <%= link_to "pay for order", new_user_order_payment_path(current_user.id, order.id), class: "button is-danger" %></p>
 		        	<% end %>
 		        <% end %>
 		        <% unless order.altogether_tickets_amount == ""%>
 		        	<p>Altogether tickets: <%= order.altogether_tickets_amount %></br>Status: <%= order.state %></p>
-		        	<% unless order.state == "paid" %>
+		        	<% unless order.state == "paid" || order.state == "expired" %>
 		        		<p>Pay: <%= link_to "pay for order", new_user_order_payment_path(current_user.id, order.id), class: "button is-danger" %></p>
 		        	<% end %>
 		        <% end %>
 		        <% unless order.avoid_one_tickets_amount == ""%>
 		        	<p>Avoid one tickets: <%= order.avoid_one_tickets_amount %></br>Status: <%= order.state %></p>
-		        	<% unless order.state == "paid" %>
+		        	<% unless order.state == "paid" || order.state == "expired" %>
 		        		<p>Pay: <%= link_to "pay for order", new_user_order_payment_path(current_user.id, order.id), class: "button is-danger" %></p>
 		        	<% end %>
 		        <% end %>
