@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   devise_for :users 
 
   resources :users do
-  	resources :orders, only: [:index]
+  	resources :orders, only: [:index, :show] do
+      resources :payments, only: [:new, :create]
+    end
   end
   
   resources :events do

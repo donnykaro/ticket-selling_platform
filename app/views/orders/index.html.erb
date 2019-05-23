@@ -1,11 +1,11 @@
 <div class="section">
 	<div class="container">
-		<% if flash[:notice].count > 0 %>
+		<% if flash[:notice] != nil && flash[:notice].count > 0 %>
 			<% flash[:notice].each do |n| %>
 				<%= flash[:notice] = n %>
 			<% end %>
 		<% end %>
-		<% if flash[:alert].count > 0 %>
+		<% if flash[:alert] != nil && flash[:alert].count > 0 %>
 			<% flash[:alert].each do |a| %>
 				<%= flash[:alert] = a %>
 			<% end %>
@@ -18,13 +18,13 @@
 		      <div class="media-content">
 		        <p class="title is-4">Order for event: <%= order.ticket.event.name %>, bill: <%= order.bill %></p>
 		        <% unless order.multiple_tickets_amount == ""%>
-		        	<p>Multiple tickets: <%= order.multiple_tickets_amount %></p>
+		        	<p>Multiple tickets: <%= order.multiple_tickets_amount %></br>Status: <%= order.state %></br>Pay: <%= link_to "pay for order", new_user_order_payment_path(current_user.id, order.id), class: "button is-danger" %></p>
 		        <% end %>
 		        <% unless order.altogether_tickets_amount == ""%>
-		        	<p>Altogether tickets: <%= order.altogether_tickets_amount %></p>
+		        	<p>Altogether tickets: <%= order.altogether_tickets_amount %></br>Status: <%= order.state %></br>Pay: <%= link_to "pay for order", new_user_order_payment_path(current_user.id, order.id), class: "button is-danger" %></p>
 		        <% end %>
 		        <% unless order.avoid_one_tickets_amount == ""%>
-		        	<p>Avoid one tickets: <%= order.avoid_one_tickets_amount %></p>
+		        	<p>Avoid one tickets: <%= order.avoid_one_tickets_amount %></br>Status: <%= order.state %></br>Pay: <%= link_to "pay for order", new_user_order_payment_path(current_user.id, order.id), class: "button is-danger" %></p>
 		        <% end %>
 		      </div>
 		    </div>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  order_id: 1
+  hashed_card: MyString
+
+two:
+  user_id: 1
+  order_id: 1
+  hashed_card: MyString
