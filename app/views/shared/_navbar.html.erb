@@ -15,7 +15,6 @@
             <div class="navbar-end">
               <div class="navbar-item">
                 <div class="field is-grouped">
-                  <!-- TODO - change to statemachine -->
                   <% if user_signed_in? %>
                     <p class="control">
                       <%= link_to "Reservations", user_orders_path(current_user.id) %>
