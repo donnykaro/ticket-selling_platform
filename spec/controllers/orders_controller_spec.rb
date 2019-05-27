@@ -8,9 +8,6 @@ RSpec.describe "Order management", :type => :request do
     @multiple_tickets = FactoryGirl.create( :ticket, event_id: @event.id, ticket_type: "normal", selling_option: "multiple", amount: 100, price: 100 )
     @altogether_tickets = FactoryGirl.create( :ticket, event_id: @event.id, ticket_type: "normal", selling_option: "altogether", amount: 100, price: 100 )
     @avoid_one_tickets = FactoryGirl.create( :ticket, event_id: @event.id, ticket_type: "normal", selling_option: "avoid one", amount: 100, price: 100 )
-    # @concession_multiple_tickets = FactoryGirl.create( :ticket, event_id: @event.id, ticket_type: "concession", selling_option: "multiple", amount: 100 )
-    # @concession_altogether_tickets = FactoryGirl.create( :ticket, event_id: @event.id, ticket_type: "concession", selling_option: "altogether", amount: 100 )
-    # @concession_avoid_one_tickets = FactoryGirl.create( :ticket, event_id: @event.id, ticket_type: "concession", selling_option: "avoid one", amount: 100 )
   end
 
   it "creates correct order for multiple tickets, checks user order count, billing, and redirects to user orders page" do
@@ -27,7 +24,6 @@ RSpec.describe "Order management", :type => :request do
     expect(response).to redirect_to("/users/#{@user.id}/orders")
     expect(flash[:success]).to be_present
     expect(flash[:success]).to include("Multiple tickets order saved")
-
   end
 
   it "creates incorrect order for multiple tickets, checks user order count, and redirects to user orders page" do

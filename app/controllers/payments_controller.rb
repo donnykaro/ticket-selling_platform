@@ -16,14 +16,16 @@ class PaymentsController < ApplicationController
 		minutes = (total_seconds / 60).floor
 
 		expired_flag = false
-		if minutes > 15
+		if minutes > 15 || @payment.order.state == "expired"
 			expired_flag = true
-			@payment.order.update(state: "expired")
+			if @payment.order.state == "reserved"
+				@payment.order.update(state: "expired")
+			end
 			@payment = Payment.new(nil)
 		end
 
 		if @payment.save
-			flash[:notice] = "payment successful"
+			flash[:success] = "Payment successful"
 			@payment.order.update(state: "paid")
 			amount = 0
 			if @payment.order.multiple_tickets_amount != ""
@@ -36,10 +38,11 @@ class PaymentsController < ApplicationController
 				amount = @payment.order.avoid_one_tickets_amount.to_i
 			end
 			@payment.order.ticket.update(amount: (@payment.order.ticket.amount - amount))
-			redirect_to events_path
+			redirect_to user_orders_path(current_user.id)
 		else
 			if expired_flag
 				flash[:alert] = "The order has expired"
+				redirect_to user_orders_path(current_user.id)
 			else
 				flash[:alert] = @payment.errors
 				render 'new'
