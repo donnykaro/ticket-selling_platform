@@ -28,11 +28,6 @@ RSpec.describe "Order management", :type => :request do
     expect(flash[:success]).to be_present
     expect(flash[:success]).to include("Multiple tickets order saved")
 
-    # expect(response).to redirect_to(assigns(:widget))
-    # follow_redirect!
-
-    # expect(response).to render_template(:show)
-    # expect(response.body).to include("Widget was successfully created.")
   end
 
   it "creates incorrect order for multiple tickets, checks user order count, and redirects to user orders page" do
@@ -127,10 +122,5 @@ RSpec.describe "Order management", :type => :request do
     expect(response).to redirect_to("/users/#{@user.id}/orders")
     expect(flash[:alert]).to be_present
     expect(flash[:alert]).to include("Nothing saved, form empty")
-  end
-
-  it "does not render a different template" do
-    get "/widgets/new"
-    expect(response).to_not render_template(:show)
   end
 end
