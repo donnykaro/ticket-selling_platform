@@ -1,8 +1,8 @@
 <div class="section">
 	<div class="container">
-		<% if flash[:notice] != nil && flash[:notice].count > 0 %>
-			<% flash[:notice].each do |n| %>
-				<%= flash[:notice] = n %>
+		<% if flash[:success] != nil && flash[:success].count > 0 %>
+			<% flash[:success].each do |n| %>
+				<%= flash[:success] = n %>
 			<% end %>
 		<% end %>
 		<% if flash[:alert] != nil && flash[:alert].count > 0 %>
